@@ -1,0 +1,135 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-sm-12">
+    <h3 class="text-black text-center my-5">Hospital/<small>{{hospital.HospitalName}}</small></h3>
+    <div class = "row">
+    <div class="col-sm-4">
+    <a href="{% url "updatehospital" hospital.id %}" class="btn btn-warning btn-sm">Edit</a>
+    <h4 class="text-center alert alert-info mt-3"> Hospital details</h4>
+        <table class="table table-hover bg-white">
+            <tbody>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Hospital Director</th>
+                    <td scope="col" style="width:50%">{{hospital.CurrentDirector}}</td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Eshtablishment Year</th>
+                    <td scope="col" style="width:50%">{{hospital.YearOfOpening}}</td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Location</th>
+                    <td scope="col" style="width:50%">{{hospital.Address}}-{{hospital.Pincode}}</td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Ambulance Available</th>
+                    <td scope="col" style="width:50%">
+                        {% if hospital.AmbulanceAvailable %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Multispeciality</th>
+                    <td scope="col" style="width:50%">
+                        {% if hospital.Multispeciality %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Emergency Operations</th>
+                    <td scope="col" style="width:50%">
+                        {% if hospital.EmergencyOperation %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Blood Bank</th>
+                    <td scope="col" style="width:50%">
+                        {% if hospital.BloodBank %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">ICU</th>
+                    <td scope="col" style="width:50%">
+                        {% if hospital.ICU %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Departments</th>
+                    <td scope="col" style="width:50%">{% for dep in department %}
+                        <span>{{dep}}</span>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="col-sm-8">
+        <a href="{% url "addambulance" hospital.id %}" class="btn btn-success btn-sm">Add Ambulance</a>
+        <h4 class="text-center alert alert-info mt-3"> Ambulance details</h4>
+        {% if ambulances %}
+        <table class="table table-hover bg-white">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col" style="width:20%">Driver Name</th>
+                    <th scope="col" style="width:20%">Phone Number</th>
+                    <th scope="col" style="width:20%">Ambulance Number</th>
+                    <th scope="col" style="width:20%">Type</th>
+                    <th scope="col" style="width:20%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ambulance in ambulances %}
+                    <tr>
+                        <td class="text-center" >{{ambulance.DriverName}}</td>
+                        <td class="text-center" >{{ambulance.DriverNumber}}</td>
+                        <td class="text-center" >{{ambulance.CarNumber}}</td>
+                        <td class="text-center" >
+                            {% if ambulance.Type == 'T' %}
+                                Type 1
+                            {% elif ambulance.Type == 'C' %}
+                                Critical Care Transport
+                            {% elif ambulance.Type == 'D' %}
+                                Disaster Response
+                            {% else %}
+                                Special Event Ambulance
+                            {% endif %}
+                        </td>
+                        <td class="text-center" >
+                            <a href="{% url "viewambulance" ambulance.id %}" class="btn btn-info btn-sm">View</a>
+                            <a href="{% url "updateambulance" ambulance.id %}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{% url "deleteambulance" ambulance.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                                <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h4 class="text-center alert alert-warning">No Ambulances Added</h4>
+    {% endif %}
+    </div>
+</div>
+    <a href="{% url 'dashboard' user.id %}" class="btn btn-danger">Back</a>
+</div>
+{% endblock content %}

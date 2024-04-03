@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block side %}
+<div class="col-sm-2">
+    <h3 class="text-black text-center my-5">Profile</h3>
+    <img src="{% static "core/img/amb3.jpeg" %}" class="img-fluid rounded-circle" alt="User">
+    <h5 class="text-center">{{full_name}}</h5>
+    {% if not full_name %}
+    <h6 class="text-center">Admin</h6>
+    {% else %}
+        <h6 class="text-center">(HospitalAdmin)</h6>
+    {% endif %}
+</div>    
+{% endblock side %}
+
+{% block content %}
+
+<div class="col-sm-10">
+    <h3 class="text-black my-5">Dashboard/<small>{{request.user}}</small></h3>
+    <a href="{% url "addhospital" %}" class="btn btn-success btn-sm">Add hospital</a>
+    <h4 class="text-center alert alert-info mt-3">Your Hospitals</h4>
+    {% if hospitals %}
+        <table class="table table-hover bg-white">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col" style="width:20%">Name</th>
+                    <th scope="col" style="width:20%">Director</th>
+                    <th scope="col" style="width:20%">Address</th>
+                    <th scope="col" style="width:20%">Eshtablished</th>
+                    <th scope="col" style="width:20%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hospital in hospitals %}
+                    <tr>
+                        <td class="text-center" >{{hospital.HospitalName}}</td>
+                        <td class="text-center" >{{hospital.CurrentDirector}}</td>
+                        <td class="text-center" >{{hospital.Address}}</td>
+                        <td class="text-center" >{{hospital.YearOfOpening}}</td>
+                        <td class="text-center" >
+                            <a href="{% url "viewhospital" hospital.id %}" class="btn btn-info btn-sm">View</a>
+                            <a href="{% url "updatehospital" hospital.id %}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{% url "deletehospital" hospital.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                                <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h4 class="text-center alert alert-warning">No Hospitals Added</h4>
+    {% endif %}
+</div>
+
+{% endblock content %}

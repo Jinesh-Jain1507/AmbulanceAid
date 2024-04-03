@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="col-sm-12">
+    <h3 class="text-black my-5 text-center">Update Hospital Details</h3>
+    <form action="" method="post" novalidate>
+    {% csrf_token %}
+    <div class="row ">
+    <div class="col-md-6 container1">
+        {% for field in form.visible_fields %}
+            {% if forloop.counter == 1 or forloop.counter == 2 or forloop.counter == 3 or forloop.counter == 4 or forloop.counter == 5 or forloop.counter == 6 or forloop.counter == 7 or forloop.counter == 8 %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5 container1">
+        {% for field in form.visible_fields %}
+        {% if forloop.counter == 9 or forloop.counter == 10 or forloop.counter == 11 or forloop.counter == 12 or forloop.counter == 13 or forloop.counter == 14 %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}<br><br> 
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+    <br>
+    <input type="submit" value="Update" class="btn btn-success">
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p class="alert alert-danger my-3">{{error}}</p>
+        {% endfor %}
+    {% endif %}
+    <a href="{% url 'dashboard' user.id %}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+
+{% endblock content %}

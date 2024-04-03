@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'core/vendor/aos/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'core/vendor/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'core/vendor/boxicons/css/boxicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/vendor/glightbox/css/glightbox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap1.css' %}">
+    <title>Ambulance Booking System</title>
+    <style>
+
+        .container1 {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            max-width: 250px;
+            margin-left: 800px;
+            margin-top: 00px; /* Adjust the margin as needed to center the container vertically */
+            
+        }
+        #hero {
+            width: 100%;
+            height: 75vh;
+            background: url("../../static/core/img/Ambulance.jpg") top left;
+            background-size: cover;
+            position: relative;
+          }
+    </style>
+</head>
+<body>
+    <div class="container-fluid bg-dark">
+        {% include 'core/navbar.html' %}
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{message.tags}} alert-dismissible fade show mt-1" role="alert" id ="alert">
+                            <strong>{{message}}</strong>
+                            <button type="button" class="close" onclick="$('#alert').hide();" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <section id="hero" class="d-flex align-items-center">
+        <div class="container" data-aos="zoom-out" data-aos-delay="100">
+          <h1>"<span style="color: #e75480;">AmbulanceAid</span>: Where Urgency Meets Efficiency."</h1>
+          <h2>"On Time, Every Time: AmbulanceAid, Your Lifesaver."</h2>
+          <div class=" text-center">
+            {% if request.user.is_authenticated %} <div class="text-center m">
+            {% if not request.user.role %}
+            <a href="{% url "selectambulance" %}"><span class="btn btn-danger btn-large text-white"><b><h1 class="text-white" >BOOK<br>NOW</h1></b></span></a>
+        </div>
+        {% endif %}
+            {% endif %}
+          </div>
+        </div>
+    </section><!-- End Hero -->
+    
+    <main id="main">
+        <section id="counts" class="counts">
+            <div class="container" data-aos="fade-up">
+      
+              <div class="row">
+      
+                <div class="col-lg-3 col-md-6">
+                  <div class="count-box">
+                    <i class='bx bx-plus-medical'></i>
+                    <span data-purecounter-start="0" data-purecounter-end="20" data-purecounter-duration="2"
+                      class="purecounter"></span>
+                    <p>24 x 7 services Available</p>
+                  </div>
+                </div>
+      
+                <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+                  <div class="count-box">
+                    <i class='bx bxs-ambulance' ></i>
+                    <span data-purecounter-start="0" data-purecounter-end="200" data-purecounter-duration="2"
+                      class="purecounter"></span>
+                    <p>Drivers</p>
+                  </div>
+                </div>
+      
+                <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+                  <div class="count-box">
+                    <i class="bx bi-emoji-smile"></i>
+                    <span data-purecounter-start="0" data-purecounter-end="1000" data-purecounter-duration="2"
+                      class="purecounter"></span>
+                    <p>Satisfied Patients</p>
+                  </div>
+                </div>
+      
+                <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+                  <div class="count-box">
+                    <i class='bx bxs-edit-alt' ></i>
+                    <span data-purecounter-start="0" data-purecounter-end="140" data-purecounter-duration="2"
+                      class="purecounter"></span>
+                    <p>Positive Feedbacks</p>
+                  </div>
+                </div>
+      
+              </div>
+      
+            </div>
+          </section><!-- End Counts Section -->
+      
+          <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq section-bg">
+        <div class="container" data-aos="fade-up">
+  
+          <div class="section-title">
+            <h2>F.A.Q</h2>
+            <h3>Frequently Asked <span>Questions</span></h3>
+            <p>Questions are never-ending. We have tried to answer the most common ones.</p>
+          </div>
+  
+          <div class="row justify-content-center">
+            <div class="col-xl-10">
+              <ul class="faq-list">
+  
+                <li>
+                  <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">What information is required during user registration?
+                    <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                  <div id="faq1" class="collapse" data-bs-parent=".faq-list">
+                    <p>
+                      User registration involves providing basic personal details such as name, contact information, and creating a secure login. This allows users to access ambulance booking services efficiently.
+                    </p>
+                  </div>
+                </li>
+  
+                <li>
+                  <div data-bs-toggle="collapse" class="collapsed question" href="#faq10"> How does AmbulanceAid.com work during an emergency?
+                    <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                  <div id="faq10" class="collapse" data-bs-parent=".faq-list">
+                    <p>
+                      AmbulanceAid.com facilitates swift ambulance bookings by allowing users to register, input patient details,
+                       and connect hospitals with available ambulance services. Users can input critical patient information, and hospitals can view and book ambulances based on availability and suitability.
+                    </p>
+                  </div>
+                </li>
+  
+                <li>
+                  <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Are the books regularly updated?
+                    <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                  <div id="faq2" class="collapse" data-bs-parent=".faq-list">
+                    <p>
+                      Updation requires some time, but surely updates volumes will be available at the earliest.
+                    </p>
+                  </div>
+                </li>
+  
+                <li>
+                  <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">Can hospitals manage multiple ambulance bookings through AmbulanceAid.com?<i class="bi bi-chevron-down icon-show"></i><i
+                      class="bi bi-chevron-up icon-close"></i></div>
+                  <div id="faq3" class="collapse" data-bs-parent=".faq-list">
+                    <p>
+                      Yes, hospitals registered on the platform have the capability to view real-time ambulance availability and make multiple bookings based on their requirements and the number of patients in need of transportation.
+                    </p>
+                  </div>
+                </li>
+  
+                <li>
+                  <div data-bs-toggle="collapse" href="#faq30" class="collapsed question">Is AmbulanceAid.com available in all regions?<i class="bi bi-chevron-down icon-show"></i><i
+                      class="bi bi-chevron-up icon-close"></i></div>
+                  <div id="faq30" class="collapse" data-bs-parent=".faq-list">
+                    <p>
+                      Currently, AmbulanceAid.com focuses on specific regions for ambulance services. However, efforts are ongoing to expand its availability to more areas gradually.
+                    </p>
+                  </div>
+                </li>
+  
+                <li>
+                  <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">Is AmbulanceAid.com accessible on mobile devices?<i class="bi bi-chevron-down icon-show"></i><i
+                      class="bi bi-chevron-up icon-close"></i></div>
+                  <div id="faq4" class="collapse" data-bs-parent=".faq-list">
+                    <p>
+                      Absolutely, AmbulanceAid.com prioritizes data security and strictly adheres to healthcare data privacy regulations to safeguard user, patient, and hospital information.
+                    </p>
+                  </div>
+                </li>
+  
+                <li>
+                  <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">Is AmbulanceAid.com accessible on mobile devices?<i class="bi bi-chevron-down icon-show"></i><i
+                      class="bi bi-chevron-up icon-close"></i></div>
+                  <div id="faq5" class="collapse" data-bs-parent=".faq-list">
+                    <p>
+                      Yes, AmbulanceAid.com is designed to be accessible through web browsers on various devices, including mobile phones, tablets, and computers, ensuring flexibility and ease of use.
+                    </p>
+                  </div>
+                </li>
+  
+                <li>
+                  <div data-bs-toggle="collapse" href="#faq6" class="collapsed question">Is AmbulanceAid non-profit based? <i
+                      class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                  <div id="faq6" class="collapse" data-bs-parent=".faq-list">
+                    <p>
+                      Yes, AmbulanceAid is currently a non-profit based website.
+                    </p>
+                  </div>
+                </li>
+  
+  
+              </ul>
+            </div>
+          </div>
+  
+        </div>
+      </section><!-- End Frequently Asked Questions Section -->
+    </main>
+    <div class="container-fluid">
+        {% include 'core/footer.html' %}
+    </div>
+    <script src="{% static 'core/js/bootstrap.js' %}"></script>
+    <script src="{% static 'core/js/jquery.js' %}"></script>
+    <script src="{% static 'core/js/popper.js' %}"></script>
+    <script src="{% static 'core/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'core/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'core/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'core/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'core/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'core/vendor/waypoints/noframework.waypoints.js' %}"></script>
+    <script src="{% static 'core/vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'core/js/main.js' %}"></script>
+</body>
+</html>

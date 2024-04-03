@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block side %}
+<div class="col-sm-4">
+    <h3 class="text-black text-center my-5">Profile</h3>
+    <div class="container1">
+    <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6"><img src="{% static "core/img/User.jpg" %}" class="img-fluid rounded-circle" alt="User"></div>
+    <div class="col-sm-2"></div>
+    </div>
+    <h5 class="text-center">{{full_name}}</h5>
+    {% if not full_name %}
+    <h6 class="text-center">Admin</h6>
+    {% else %}
+        <h6 class="text-center">(User)</h6>
+    {% endif %}
+    {% if profile %}
+    <h4 class="text-center alert alert-info mt-3"> Profile</h4>
+        <table class="table table-hover bg-white">
+            <tbody>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Date Of Birth</th>
+                    <td scope="col" style="width:50%">{{profile.DateOfBirth}}</td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Address</th>
+                    <td scope="col" style="width:50%">{{profile.Address}}</td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Contact</th>
+                    <td scope="col" style="width:50%">{{profile.Contact}}</td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">BloodGroup</th>
+                    <td scope="col" style="width:50%">{{profile.BloodGroup}}</td>
+                </tr>
+                <tr class="text-center">
+                    <th scope="col" style="width:50%">Diseases</th>
+                    <td scope="col" style="width:50%">{% for dis in diseases %}
+                        <span>{{dis}}</span>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+        {% else %}
+            <a href="{% url "profile" %}" class="btn btn-info btn-sm">Complete Your Profile</a>
+        {% endif %}
+    </div>
+</div>    
+{% endblock side %}
+
+{% block content %}
+
+<div class="col-sm-8">
+    <h3 class="text-black my-5">Dashboard/<small>{{request.user}}</small></h3>
+    <a href="{% url "selectambulance" %}" class="btn btn-success btn-sm">Book Now</a>
+    <h4 class="text-center alert alert-info mt-3">Your Bookings</h4>
+    {% if bookings %}
+        <table class="table table-hover bg-white">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col" style="width:20%">Date Time</th>
+                    <th scope="col" style="width:20%">Hospital</th>
+                    <th scope="col" style="width:20%">Ambulance Number</th>
+                    <th scope="col" style="width:20%">Status</th>
+                    <th scope="col" style="width:20%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td class="text-center" >{{booking.DateTime}}</td>
+                        <td class="text-center" >{{booking.Ambulance.Hospital.HospitalName}}</td>
+                        <td class="text-center" >{{booking.Ambulance.CarNumber}}</td>
+                        <td class="text-center" >
+                            {% if booking.Status == 'B' %}
+                                Booking
+                            {% elif booking.Status == 'O' %}
+                                On The Way
+                            {% else %}
+                                Completed
+                            {% endif %}
+                        </td>
+                        <td class="text-center" >
+                            <a href="{% url "booking" booking.id %}" class="btn btn-info btn-sm">View Details</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h4 class="text-center alert alert-warning">No Bookings Yet</h4>
+    {% endif %}
+</div>
+
+{% endblock content %}
