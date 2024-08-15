@@ -1,4 +1,4 @@
-# Django Blog Website
+# Ambulance Booking Website
 
 Welcome to the Ambulance Booking System project! This system provides a convenient way for users to book ambulances near their location using their pincode. 
 It offers a user-friendly interface for both patients and hospitals, allowing them to register, manage bookings, and track ambulance availability in real-time.
